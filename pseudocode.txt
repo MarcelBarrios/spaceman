@@ -1,0 +1,55 @@
+def load_word():
+    open the file words.txt in read mode and stor its content in f
+    get a list, each line is an element, from the contents of f and store it in words_list
+    close the file f
+
+    grab the first element (line) of words_list, make a list of words that are separeted by spaces and store it in words_list
+    randomnly choose a word from words_list and store it in secret_word.
+    return secret_word
+
+def is_word_guessed(secret_word, letters_guessed):
+    for each letter in the string secret_word
+        if a letter is not in the list letters_guessed
+            return false if any letter is not guessed
+    return true if all letters are guessed
+
+def get_guessed_word(secret_word, letters_guessed):
+    Set letters_so_far to an empty string
+
+    for each letter in secret_word
+        if a letter is in letters_guessed 
+            add the letter to letters_so_far
+        otherwise
+            add an underscore to letters_se_far
+    returns letters_so_far
+
+def is_guess_in_word(guess, secret_word):
+    if the letter from guess is in secret_word
+        return true
+    otherwise
+        return false
+
+def spaceman(secret_word):
+    print all the introduction to game stating the length of the word and how many incorrect guesses the player has
+    set num_guesses to 0
+    set won to the bool False
+    run this code while num_guesses is less than 7 and won is equal to the bool False.
+        set letter equal to the string "aa" so it enters into the while code block
+        run this code while the length of letter is different to 1 or letter is not a letter (not a number or anything else than a letter)
+            set letter equal to the user input after "Enter a letter: " is prompted
+
+        call the function is_guess_in_word with the letter the user inputed and secret_word as arguments
+        if letter_guess is equal to the boll True
+            print Your guess appears in the word!
+        otherwise
+            print Sorry your guess was not in the word, try again
+            reduce num_gueses by 1
+        
+        show to the user word with underscores for the letters he/she has not guessed and letters in the word for the ones he/she has guessed so far.
+        call the function is_word_guessed and store either True of False as a bool in the won var
+
+    if won is equal to bool True
+        show to the user You won!
+    otherwise
+        show to the user Sorry you didn't win, try again!
+        show to the user what was the secret word
