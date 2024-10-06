@@ -157,41 +157,59 @@ def spaceman(secret_word):
     won = False
     letters_guessed = []
     unselected_letters =['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',  'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-    while(num_guesses < 7 and not won):
-        letter = "aa"
-        while(len(letter) != 1 or not letter.isalpha()):
-            letter = input("Enter a letter: ")
-            if (letter in letters_guessed):
-                print("You've already guessed that letter!")
-                continue
-            letters_guessed.append(letter)
-        #TODO: Check if the guessed letter is in the secret or not and give the player feedback
-        letter_guess = is_guess_in_word(letter, secret_word)
-        if(letter_guess == True):
-            print("Your guess appears on the word!")
+    play_again = True
+    while(play_again == True):
+        while(num_guesses < 7 and not won):
+            letter = "aa"
+            while(len(letter) != 1 or not letter.isalpha()):
+                letter = input("Enter a letter: ")
+                if (letter in letters_guessed):
+                    print("You've already guessed that letter!")
+                    continue
+                if (len(letter) > 1):
+                    print("You should select only one letter(character)!")
+                    continue
+                letters_guessed.append(letter)
+
+            #TODO: Check if the guessed letter is in the secret or not and give the player feedback
+            letter_guess = is_guess_in_word(letter, secret_word)
+            if(letter_guess == True):
+                print("Your guess appears on the word!")
+            else:
+                print("Sorry your guess was not in the word, try again")
+                num_guesses += 1
+                print(f"You have {7 - num_guesses} incorrect guesses left")
+            #TODO: show the guessed word so far
+            print("Guessed word so far: ", get_guessed_word(secret_word, letters_guessed))
+            for unselected_letter in unselected_letters:
+                if(letter == unselected_letter):
+                    unselected_letters.remove(letter)
+            print("These letters haven't been guessed yet: ", end="")
+            for letter in unselected_letters:
+                print(letter, end="")
+            #TODO: check if the game has been won or lost
+            won = is_word_guessed(secret_word, letters_guessed)
+
+        if (won):
+            print("You won!")
         else:
-            print("Sorry your guess was not in the word, try again")
-            num_guesses += 1
-            print(f"You have {7 - num_guesses} incorrect guesses left")
-        #TODO: show the guessed word so far
-        print("Guessed word so far: ", get_guessed_word(secret_word, letters_guessed))
-        for unselected_letter in unselected_letters:
-            if(letter == unselected_letter):
-                unselected_letters.remove(letter)
-        print("These letters haven't been guessed yet: ", end="")
-        for letter in unselected_letters:
-            print(letter, end="")
-        #TODO: check if the game has been won or lost
-        won = is_word_guessed(secret_word, letters_guessed)
-
-    if (won):
-        print("You won!")
-    else:
-        print("Sorry you didn't win, try again!")
-        print(f"the word was: {secret_word}")
-    
-
-
+            print("Sorry you didn't win, try again!")
+            print(f"the word was: {secret_word}")
+        
+        response_play_again = (input("Do you want to play again (y/n): ")).lower()
+        if (response_play_again == 'y'):
+            play_again = True
+            num_guesses = 0
+            letters_guessed = []
+            won = False
+            unselected_letters =['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',  'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+            secret_word = load_word()
+            print("\nWelcome to Spaceman!")
+            print(f"the secret word contains {len(secret_word)} letters")
+            print(f"You have 7 incorrect guesses, please enter one letter per round")
+            print("________________________")       
+        elif(response_play_again == 'n'):
+            play_again = False
 
 # call function load_word to get a random word and put it in secret_word
 # call the function speceman with the word as an argument.
