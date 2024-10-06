@@ -290,6 +290,7 @@ def spaceman(secret_word):
             won = False
             unselected_letters =['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',  'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
             secret_word = load_word()
+            spaceman_art_count = 0
             # showing the intro to the game
             print("\nWelcome to Spaceman!")
             print(f"the secret word contains {len(secret_word)} letters")
