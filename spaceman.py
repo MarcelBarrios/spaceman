@@ -158,27 +158,76 @@ def spaceman(secret_word):
     letters_guessed = []
     unselected_letters =['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',  'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
     play_again = True
+    spaceman_art_count = 0
     while(play_again == True):
         while(num_guesses < 7 and not won):
-            letter = "aa"
-            while(len(letter) != 1 or not letter.isalpha()):
-                letter = input("Enter a letter: ")
-                if (letter in letters_guessed):
-                    print("You've already guessed that letter!")
-                    continue
-                if (len(letter) > 1):
-                    print("You should select only one letter(character)!")
-                    continue
-                letters_guessed.append(letter)
+            # letter = "aa"
+            # while(len(letter) != 1 or not letter.isalpha()):
+            #     letter = input("Enter a letter: ").lower()
+            #     if (letter in letters_guessed):
+            #         print("You've already guessed that letter!")
+            #         continue
+            #     if (len(letter) > 1):
+            #         print("You should select only one letter(character)!")
+            #         continue
+            #     letters_guessed.append(letter)
+            letter = input("Enter a letter: ").lower()
+    
+            if (len(letter) != 1 or not letter.isalpha()):
+                print("Invalid input! Please enter a single letter.")
+                continue
+            
+            if (letter in letters_guessed):
+                print("You've already guessed that letter!")
+                print("---------------------------")
+                # Skips the guess penalty if the letter is repeated
+                continue  
+
+            letters_guessed.append(letter)
 
             #TODO: Check if the guessed letter is in the secret or not and give the player feedback
             letter_guess = is_guess_in_word(letter, secret_word)
-            if(letter_guess == True):
+            if(letter_guess):
                 print("Your guess appears on the word!")
             else:
                 print("Sorry your guess was not in the word, try again")
                 num_guesses += 1
                 print(f"You have {7 - num_guesses} incorrect guesses left")
+                if(spaceman_art_count == 0):
+                    print("   O  ")
+                    spaceman_art_count += 1
+                elif (spaceman_art_count == 1):
+                    print("   O  ")
+                    print("  /| ")
+                    spaceman_art_count += 1
+                elif (spaceman_art_count == 2):
+                    print("   O ") 
+                    print("  /|\\")
+                    spaceman_art_count += 1
+                elif (spaceman_art_count == 3):
+                    print("   O ") 
+                    print("  /|\\")
+                    print("   |  ")
+                    spaceman_art_count += 1
+                elif (spaceman_art_count == 4):
+                    print("   O ") 
+                    print("  /|\\")
+                    print("   |  ")
+                    print("  /   ")
+                    spaceman_art_count += 1
+                elif (spaceman_art_count == 5):
+                    print("   O ") 
+                    print("  /|\\")
+                    print("   |  ")
+                    print("  / \    ")
+                    spaceman_art_count += 1
+                elif (spaceman_art_count == 6):
+                    print("  .---." )
+                    print("  | O |" )
+                    print(" /| | |\\")
+                    print("  | | |  ")
+                    print("  / \\ \\")
+                    print(" /   \\ \\")
             #TODO: show the guessed word so far
             print("Guessed word so far: ", get_guessed_word(secret_word, letters_guessed))
             for unselected_letter in unselected_letters:
@@ -188,6 +237,7 @@ def spaceman(secret_word):
             for letter in unselected_letters:
                 print(letter, end="")
             #TODO: check if the game has been won or lost
+            print("\n---------------------------")
             won = is_word_guessed(secret_word, letters_guessed)
 
         if (won):
@@ -217,3 +267,4 @@ def spaceman(secret_word):
 #These function calls that will start the game
 secret_word = load_word()
 spaceman(secret_word)
+
